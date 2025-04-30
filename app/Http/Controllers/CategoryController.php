@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -14,12 +16,9 @@ class CategoryController extends Controller
     public function index()
     {
          // Fetch all categories
-         $categories = Category::all();
+         $categories = Category::paginate(2);
 
-         return response()->json([
-             'success' => true,
-             'data' => $categories,
-         ]);
+         return new CategoryCollection($categories);
     }
 
     /**
@@ -30,11 +29,7 @@ class CategoryController extends Controller
            // Create a new category
            $category = Category::create($request->validated());
 
-           return response()->json([
-               'success' => true,
-               'message' => 'Category created successfully.',
-               'data' => $category,
-           ], 201);
+           return new CategoryResource($category);
     }
 
     /**
@@ -43,10 +38,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
          // Return the specified category
-         return response()->json([
-            'success' => true,
-            'data' => $category,
-        ]);
+         return new CategoryResource($category);
     }
 
 
@@ -58,11 +50,7 @@ class CategoryController extends Controller
          // Update the category with validated data
          $category->update($request->validated());
 
-         return response()->json([
-             'success' => true,
-             'message' => 'Category updated successfully.',
-             'data' => $category,
-         ]);
+         return  new CategoryResource($category);
     }
 
     /**
@@ -71,11 +59,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
           // Delete the category
-          $category->delete();
-
-          return response()->json([
-              'success' => true,
-              'message' => 'Category deleted successfully.',
-          ]);
+          return $category->delete();
     }
 }
