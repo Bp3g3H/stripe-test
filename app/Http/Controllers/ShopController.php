@@ -13,7 +13,5 @@ class ShopController extends Controller
             ['id' => 2, 'name' => 'Pants', 'price' => 2000],
             ['id' => 3, 'name' => 'Hat', 'price' => 3000],
         ];
-
-        return view('shop.index', compact('products'));
     }
 }

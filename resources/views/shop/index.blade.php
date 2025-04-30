@@ -52,10 +52,6 @@
 
 <div class="container">
     <h2>@yield('title', 'Home')</h2>
-    <div class="button-group">
-        <a href="{{ route('shop.index') }}" class="btn btn-browse">Browse Goods</a>
-        <a href="{{ route('shop.index') }}" class="btn btn-cart">View Cart</a>
-    </div>
 
     <div class="content">
         @yield('content')

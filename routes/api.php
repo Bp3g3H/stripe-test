@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -12,3 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/user/register', RegisterController::class);
 Route::post('/user/login', LoginController::class);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('categories', CategoryController::class);
+});
