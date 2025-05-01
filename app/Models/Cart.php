@@ -39,11 +39,11 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
-    // /**
-    //  * Get the items associated with the cart.
-    //  */
-    // public function items(): HasMany
-    // {
-    //     return $this->hasMany(CartItem::class); // Assuming you have a `CartItem` model
-    // }
+    /**
+     * Get the items associated with the cart.
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(CartItem::class); // Assuming you have a `CartItem` model
+    }
 }
