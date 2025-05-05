@@ -46,4 +46,9 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class); // Assuming you have a `CartItem` model
     }
+
+    public function setCompleted(): bool
+    {
+        return $this->update(['status' => CartStatus::Completed]);
+    }
 }

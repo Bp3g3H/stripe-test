@@ -46,6 +46,7 @@ class CartItemController extends Controller
 
         // Add the cart item to the cart
         $cartItem = $cart->items()->create($request->validated());
+        return new CartResource($cartItem);
     }
 
     /**
