@@ -23,6 +23,10 @@ class Product extends Model
         'image_url',
     ];
 
+    protected $casts = [
+        'price' => 'decimal:2', // Cast price as a decimal with 2 decimal places
+    ];
+
     /**
      * Get the category that owns the product.
      */

@@ -23,6 +23,11 @@ class CartItem extends Model
         'total_sum',
     ];
 
+    protected $casts = [
+        'price' => 'decimal:2', // Cast price as a decimal with 2 decimal places
+        'total_sum' => 'decimal:2', // Optional: Cast total_sum as a decimal
+    ];
+
     /**
      * Get the cart that owns the cart item.
      */

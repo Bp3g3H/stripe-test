@@ -32,6 +32,7 @@ class Cart extends Model
     protected $casts = [
         'status' => CartStatus::class, // Cast status to the CartStatus enum
         'completed_at' => 'datetime',
+        'total_sum' => 'decimal:2', // Optional: Cast total_sum as a decimal
     ];
 
     /**

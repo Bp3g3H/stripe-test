@@ -17,7 +17,7 @@ class CartResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => new UserResource($this->whenLoaded('user')), // Include user relationship
-            'total_sum' => $this->total_sum,
+            'total_sum' => number_format($this->total_sum, 2),
             'status' => $this->status,
             'completed_at' => $this->completed_at ? $this->completed_at->toDateTimeString() : null,
             'created_at' => $this->created_at->toDateTimeString(),

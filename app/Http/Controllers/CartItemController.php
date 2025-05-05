@@ -6,6 +6,7 @@ use App\Enums\CartStatus;
 use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
 use App\Http\Resources\CartItemCollection;
+use App\Http\Resources\CartItemResource;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -18,11 +19,9 @@ class CartItemController extends Controller
      */
     public function index()
     {
-        $cartItems = CartItem::with('cart') // Load the related cart
-            ->get()
-            ->groupBy('cart_id');
+        $cartItems = CartItem::with('cart')->get(); // Fetch all cart items with their related cart
 
-        return CartItemCollection::collection($cartItems);
+        return new CartItemCollection($cartItems); // Pass the flat collection to the resource
     }
 
     /**
@@ -43,7 +42,7 @@ class CartItemController extends Controller
 
         // Add the cart item to the cart
         $cartItem = $cart->items()->create($request->validated());
-        return new CartResource($cartItem);
+        return new CartItemResource($cartItem);
     }
 
     /**
@@ -51,7 +50,7 @@ class CartItemController extends Controller
      */
     public function show(CartItem $cartItem)
     {
-        return new CartResource($cartItem);
+        return new CartItemResource($cartItem);
     }
 
     /**
@@ -62,7 +61,7 @@ class CartItemController extends Controller
          // Update the cart item with validated data
         $cartItem->update($request->validated());
 
-        return new CartResource($cartItem);
+        return new CartItemResource($cartItem);
     }
 
     /**

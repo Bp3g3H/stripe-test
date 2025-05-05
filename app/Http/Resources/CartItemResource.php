@@ -19,8 +19,8 @@ class CartItemResource extends JsonResource
             'cart_id' => $this->cart_id,
             'product_id' => $this->product_id,
             'quantity' => $this->quantity,
-            'price' => $this->price,
-            'total_sum' => $this->total_sum,
+            'price' => number_format($this->price, 2), // Ensure price is always formatted as 2 decimal places
+            'total_sum' => number_format($this->total_sum, 2),
             'user' => new UserResource($this->whenLoaded('cart.user')), // Include user via cart relationship
             'product' => new ProductResource($this->whenLoaded('product')), // Include product relationship
             'created_at' => $this->created_at->toDateTimeString(),
