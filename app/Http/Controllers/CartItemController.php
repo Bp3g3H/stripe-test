@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
 use App\Http\Resources\CartItemCollection;
 use App\Http\Resources\CartResource;
+use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,11 +38,7 @@ class CartItemController extends Controller
 
         // If no pending cart exists, create one
         if (!$cart) {
-            $cart = $user->carts()->create([
-                'total_sum' => 0,
-                'status' => CartStatus::Pending,
-                'completed_at' => null,
-            ]);
+            $cart = Cart::createPending($user->id);
         }
 
         // Add the cart item to the cart

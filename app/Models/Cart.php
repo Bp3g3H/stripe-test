@@ -54,4 +54,16 @@ class Cart extends Model
     {
         return $this->update(['status' => CartStatus::Completed]);
     }
+
+    public static function createPending($userId, $properties = []): Cart
+    {
+        $defaultProperties = [
+            'user_id' => $userId,
+            'total_sum' => 0,
+            'status' => CartStatus::Pending,
+            'completed_at' => null,
+        ];
+        $properties = array_merge($defaultProperties, $properties);
+        return self::create($properties);
+    }
 }

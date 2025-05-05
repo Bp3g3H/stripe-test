@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCartRequest;
 use App\Http\Resources\CartCollection;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -27,7 +28,7 @@ class CartController extends Controller
     public function store(StoreCartRequest $request)
     {
           // Create a new product
-          $cart = Cart::create($request->validated());
+          $cart = Cart::createPending(Auth::id(), $request->validated());
 
           return new CartResource($cart);
     }
