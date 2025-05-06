@@ -11,15 +11,25 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    public function pay() 
+    private BillingItemsService $billingItemsService;
+    private PayingService $payingService;
+
+    public function __construct(BillingItemsService $billingItemsService, PayingService $payingService)
     {
-        $productItemProvider = new ProductItemProvider();
-        $prodcutItemParser = new ProductItemParser();
-        $billingItems = new BillingItemsService($prodcutItemParser, $productItemProvider, Auth::id());
-        $stripePayment = new StripePayment();
-        $paymentService = new PayingService($stripePayment);
-        $checkoutUrl = $paymentService->pay($billingItems->getParsedBillingItems(), $billingItems->getIdentifier());
-        return $checkoutUrl;
+        $this->billingItemsService = $billingItemsService;
+        $this->payingService = $payingService;
+    }
+
+    public function pay()
+    {
+        // Get parsed billing items and identifier
+        $billingItems = $this->billingItemsService->getParsedBillingItems();
+        $identifier = $this->billingItemsService->getIdentifier();
+
+        // Process payment and get the checkout URL
+        $checkoutUrl = $this->payingService->pay($billingItems, $identifier);
+
+        return response()->json(['checkout_url' => $checkoutUrl]);
     }
 
     public function success()
