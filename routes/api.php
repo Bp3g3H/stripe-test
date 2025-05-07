@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -19,13 +20,15 @@ Route::get('/user', function (Request $request) {
 Route::post('/user/register', RegisterController::class);
 Route::post('/user/login', LoginController::class);
 
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment', [PaymentController::class, 'pay'])->name('payment.pay');
-
     Route::apiResource('carts', CartController::class);
     Route::apiResource('cartItems', CartItemController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('products', ProductController::class);
+    
+    Route::post('/user/logout', LogoutController::class);
 });
 
 // Webhook route for Stripe
