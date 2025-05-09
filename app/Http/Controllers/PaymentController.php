@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\BillingItems\BillingItemsService;
-use App\Services\BillingItems\ProductItemParser;
-use App\Services\BillingItems\ProductItemProvider;
 use App\Services\Payment\PayingService;
-use App\Services\Payment\StripePayment;
-use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {

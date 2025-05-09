@@ -2,13 +2,19 @@
 
 namespace App\Services\BillingItems;
 
-use App\Enums\CartStatus;
-use App\Models\Cart;
+use App\Repositories\CartRepository;
 use App\Services\BillingItems\Contracts\ItemProvider;
 
-class ProductItemProvider implements ItemProvider
+class CartItemsProvider implements ItemProvider
 {
-    private string $identifier;
+    private ?string $identifier = null;
+    private CartRepository $cartRepository;
+
+    public function __construct(CartRepository $cartRepository)
+    {
+        // Initialize the CartRepository
+        $this->cartRepository = $cartRepository;
+    }
 
     public function getIdentifier(): string
     {
@@ -23,11 +29,8 @@ class ProductItemProvider implements ItemProvider
     public function get($user_id): array
     {
         // Query the cart with the 'pending' status for the given user
-        $cart = Cart::with('items.product') // Load the CartItem relationship
-            ->where('user_id', $user_id)
-            ->where('status', CartStatus::Pending->value)
-            ->first();
-
+        $cart = $this->cartRepository->getCartWithStatusPending($user_id);
+        //dd($cart->id);
         // If no pending cart exists, return an empty array
         if (!$cart) {
             //! TODO LOG AND HANDLE THIS CASE

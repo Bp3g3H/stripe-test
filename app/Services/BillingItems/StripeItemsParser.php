@@ -4,7 +4,7 @@ namespace App\Services\BillingItems;
 
 use App\Services\BillingItems\Contracts\ItemParser;
 
-class ProductItemParser implements ItemParser
+class StripeItemsParser implements ItemParser
 {
     /**
      * Parse the billing items.

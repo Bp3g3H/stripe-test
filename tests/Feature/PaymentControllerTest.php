@@ -2,15 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Enums\CartStatus;
 use App\Models\User;
-use App\Services\BillingItems\BillingItemsService;
-use App\Services\Payment\PayingService;
+use App\Models\Product;
+use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PaymentControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     private User $user;
 
     protected function setUp(): void
@@ -23,28 +26,24 @@ class PaymentControllerTest extends TestCase
 
     public function test_pay_returns_checkout_url()
     {
-        $mockBillingItemsService = $this->createMock(BillingItemsService::class);
-        $mockBillingItemsService->method('getParsedBillingItems')->willReturn([
-            [
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => ['name' => 'Test Product'],
-                    'unit_amount' => 1000,
-                ],
-                'quantity' => 1,
-            ],
+         // Simulate an authenticated user
+        $this->actingAs($this->user, 'sanctum');
+
+        // Create real data in the database
+        $product = Product::factory()->create(['name' => 'Test Product', 'price' => 10]);
+        $cart = Cart::factory()->create(['user_id' => $this->user->id, 'status' => CartStatus::Pending]);
+        $cartItem = CartItem::factory()->create([
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'quantity' => 1,
+            'price' => $product->price,
+            'total_sum' => $product->price,
         ]);
-        $mockBillingItemsService->method('getIdentifier')->willReturn('test-identifier');
-    
-        $mockPayingService = $this->createMock(PayingService::class);
-        $mockPayingService->method('pay')->willReturn('https://stripe.com/checkout/test-session');
-    
-        $this->app->instance(BillingItemsService::class, $mockBillingItemsService);
-        $this->app->instance(PayingService::class, $mockPayingService);
-    
-        $response = $this->actingAs($this->user)->postJson(route('payment.pay'));
-    
+        // Call the pay action
+        $response = $this->postJson(route('payment.pay'));
+
+        // Assert the response status and structure
         $response->assertStatus(200)
-                 ->assertJson(['checkout_url' => 'https://stripe.com/checkout/test-session']);
+                ->assertJsonStructure(['checkout_url']);
     }
 }

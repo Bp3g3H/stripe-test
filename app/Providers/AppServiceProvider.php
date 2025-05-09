@@ -4,9 +4,10 @@ namespace App\Providers;
 
 use App\Models\CartItem;
 use App\Observers\CartItemObserver;
+use App\Repositories\CartRepository;
 use App\Services\BillingItems\BillingItemsService;
-use App\Services\BillingItems\ProductItemParser;
-use App\Services\BillingItems\ProductItemProvider;
+use App\Services\BillingItems\CartItemsProvider;
+use App\Services\BillingItems\StripeItemsParser;
 use App\Services\Payment\PayingService;
 use App\Services\Payment\StripePayment;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
         ->needs(BillingItemsService::class)
         ->give(function ($app) {
             return new BillingItemsService(
-                new ProductItemParser(),
-                new ProductItemProvider(),
+                new StripeItemsParser(),
+                new CartItemsProvider(new CartRepository()),
                 Auth::id() // Pass the authenticated user ID
             );
         });
