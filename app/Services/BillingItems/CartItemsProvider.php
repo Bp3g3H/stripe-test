@@ -8,6 +8,7 @@ use App\Services\BillingItems\Contracts\ItemProvider;
 class CartItemsProvider implements ItemProvider
 {
     private ?string $identifier = null;
+
     private CartRepository $cartRepository;
 
     public function __construct(CartRepository $cartRepository)
@@ -30,10 +31,10 @@ class CartItemsProvider implements ItemProvider
     {
         // Query the cart with the 'pending' status for the given user
         $cart = $this->cartRepository->getCartWithStatusPending($user_id);
-        //dd($cart->id);
+        // dd($cart->id);
         // If no pending cart exists, return an empty array
-        if (!$cart) {
-            //! TODO LOG AND HANDLE THIS CASE
+        if (! $cart) {
+            // ! TODO LOG AND HANDLE THIS CASE
             return [];
         }
 

@@ -30,9 +30,9 @@ class CartItemControllerTest extends TestCase
         $response = $this->getJson(route('cartItems.index'));
 
         $response->assertStatus(401)
-                 ->assertJson([
-                     'message' => 'Unauthenticated.',
-                 ]);
+            ->assertJson([
+                'message' => 'Unauthenticated.',
+            ]);
     }
 
     public function test_store_creates_cart_item_in_existing_pending_cart()
@@ -58,10 +58,10 @@ class CartItemControllerTest extends TestCase
         $response = $this->postJson(route('cartItems.store'), $data);
 
         $response->assertStatus(201)
-                 ->assertJsonPath('data.cart_id', $cart->id)
-                 ->assertJsonPath('data.product_id', $product->id)
-                 ->assertJsonPath('data.quantity', 2)
-                 ->assertJsonPath('data.price', '50.00');
+            ->assertJsonPath('data.cart_id', $cart->id)
+            ->assertJsonPath('data.product_id', $product->id)
+            ->assertJsonPath('data.quantity', 2)
+            ->assertJsonPath('data.price', '50.00');
 
         $this->assertDatabaseHas('cart_items', [
             'cart_id' => $cart->id,
@@ -94,9 +94,9 @@ class CartItemControllerTest extends TestCase
         $response = $this->postJson(route('cartItems.store'), $data);
 
         $response->assertStatus(201)
-                 ->assertJsonPath('data.product_id', $product->id)
-                 ->assertJsonPath('data.quantity', 2)
-                 ->assertJsonPath('data.price', '50.00');
+            ->assertJsonPath('data.product_id', $product->id)
+            ->assertJsonPath('data.quantity', 2)
+            ->assertJsonPath('data.price', '50.00');
 
         // Assert a new pending cart was created
         $this->assertDatabaseHas('carts', [
@@ -106,8 +106,8 @@ class CartItemControllerTest extends TestCase
 
         // Assert the cart item was added to the new cart
         $cart = Cart::where('user_id', $this->user->id)
-                    ->where('status', CartStatus::Pending->value)
-                    ->first();
+            ->where('status', CartStatus::Pending->value)
+            ->first();
 
         $this->assertDatabaseHas('cart_items', [
             'cart_id' => $cart->id,
@@ -130,23 +130,23 @@ class CartItemControllerTest extends TestCase
         $response = $this->getJson(route('cartItems.index'));
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     '*' => [
-                         'cart_id',
-                         'items' => [
-                             '*' => [
-                                 'id',
-                                 'cart_id',
-                                 'product_id',
-                                 'quantity',
-                                 'price',
-                                 'total_sum',
-                                 'created_at',
-                                 'updated_at',
-                             ],
-                         ],
-                     ],
-                 ]);
+            ->assertJsonStructure([
+                '*' => [
+                    'cart_id',
+                    'items' => [
+                        '*' => [
+                            'id',
+                            'cart_id',
+                            'product_id',
+                            'quantity',
+                            'price',
+                            'total_sum',
+                            'created_at',
+                            'updated_at',
+                        ],
+                    ],
+                ],
+            ]);
     }
 
     public function test_show_returns_a_specific_cart_item()
@@ -160,9 +160,9 @@ class CartItemControllerTest extends TestCase
         $response = $this->getJson(route('cartItems.show', $cartItem));
 
         $response->assertStatus(200)
-                 ->assertJsonPath('data.id', $cartItem->id)
-                 ->assertJsonPath('data.cart_id', $cartItem->cart_id)
-                 ->assertJsonPath('data.product_id', $cartItem->product_id);
+            ->assertJsonPath('data.id', $cartItem->id)
+            ->assertJsonPath('data.cart_id', $cartItem->cart_id)
+            ->assertJsonPath('data.product_id', $cartItem->product_id);
     }
 
     public function test_update_modifies_a_cart_item()
@@ -185,8 +185,8 @@ class CartItemControllerTest extends TestCase
         $response = $this->putJson(route('cartItems.update', $cartItem), $data);
 
         $response->assertStatus(200)
-                 ->assertJsonPath('data.quantity', 3)
-                 ->assertJsonPath('data.price', '60.00');
+            ->assertJsonPath('data.quantity', 3)
+            ->assertJsonPath('data.price', '60.00');
 
         $this->assertDatabaseHas('cart_items', [
             'id' => $cartItem->id,

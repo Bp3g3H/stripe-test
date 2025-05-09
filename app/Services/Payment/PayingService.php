@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Payment;
+
 use App\Services\Payment\Contracts\Payable;
 
 class PayingService
@@ -15,6 +16,7 @@ class PayingService
     public function pay($billingItems, $identifier)
     {
         $this->payable->set($billingItems);
+
         return $this->payable->pay($identifier);
     }
 }

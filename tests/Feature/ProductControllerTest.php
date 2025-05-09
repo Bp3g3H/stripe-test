@@ -55,20 +55,20 @@ class ProductControllerTest extends TestCase
         $response = $this->getJson(route('products.index'));
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'data' => [
-                         '*' => [
-                             'id',
-                             'name',
-                             'description',
-                             'price',
-                             'created_at',
-                             'updated_at',
-                         ],
-                     ],
-                     'links',
-                     'meta',
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'description',
+                        'price',
+                        'created_at',
+                        'updated_at',
+                    ],
+                ],
+                'links',
+                'meta',
+            ]);
     }
 
     public function test_store_creates_a_new_product()
@@ -88,16 +88,16 @@ class ProductControllerTest extends TestCase
         $response = $this->postJson(route('products.store'), $data);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'data' => [
-                         'id',
-                         'name',
-                         'description',
-                         'price',
-                         'created_at',
-                         'updated_at',
-                     ],
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'name',
+                    'description',
+                    'price',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]);
 
         $this->assertDatabaseHas('products', $data);
     }
@@ -111,16 +111,16 @@ class ProductControllerTest extends TestCase
         $response = $this->getJson(route('products.show', $product));
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'data' => [
-                         'id',
-                         'name',
-                         'description',
-                         'price',
-                         'created_at',
-                         'updated_at',
-                     ],
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'name',
+                    'description',
+                    'price',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]);
     }
 
     public function test_update_modifies_a_product()
@@ -138,16 +138,16 @@ class ProductControllerTest extends TestCase
         $response = $this->putJson(route('products.update', $product), $data);
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'data' => [
-                         'id',
-                         'name',
-                         'description',
-                         'price',
-                         'created_at',
-                         'updated_at',
-                     ],
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'name',
+                    'description',
+                    'price',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]);
 
         $this->assertDatabaseHas('products', $data);
     }

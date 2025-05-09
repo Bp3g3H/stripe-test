@@ -15,12 +15,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-           // Fetch all products with pagination
-           $products = Product::paginate(10);
+        // Fetch all products with pagination
+        $products = Product::paginate(10);
 
-           return new ProductCollection($products);
+        return new ProductCollection($products);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -38,8 +37,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-         // Return the specified product
-         return new ProductResource($product);
+        // Return the specified product
+        return new ProductResource($product);
     }
 
     /**
@@ -47,10 +46,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-          // Update the product with validated data
-          $product->update($request->validated());
+        // Update the product with validated data
+        $product->update($request->validated());
 
-          return new ProductResource($product);
+        return new ProductResource($product);
     }
 
     /**
@@ -58,7 +57,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-         // Delete the product
-         return $product->delete();
+        // Delete the product
+        return $product->delete();
     }
 }

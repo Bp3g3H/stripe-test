@@ -28,7 +28,7 @@ class WebhookController extends Controller
 
         if ($event->type === 'checkout.session.completed') {
             $session = $event->data->object;
-            
+
             // Access metadata or session details
             $identifier = $session->metadata->identifier;
             FacadesLog::info('Stripe Webhook', [

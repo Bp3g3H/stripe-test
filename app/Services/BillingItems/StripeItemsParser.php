@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\BillingItems;
 
@@ -8,16 +8,13 @@ class StripeItemsParser implements ItemParser
 {
     /**
      * Parse the billing items.
-     *
-     * @param array $billingItems
-     * @return array
      */
     public function parse(array $billingItems): array
     {
         $parsedItems = [];
 
         foreach ($billingItems as $item) {
-            $parsedItems[] = [ 
+            $parsedItems[] = [
                 'price_data' => [
                     'currency' => 'usd',
                     'product_data' => [

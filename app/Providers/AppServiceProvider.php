@@ -21,20 +21,20 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->when(\App\Http\Controllers\PaymentController::class)
-        ->needs(BillingItemsService::class)
-        ->give(function ($app) {
-            return new BillingItemsService(
-                new StripeItemsParser(),
-                new CartItemsProvider(new CartRepository()),
-                Auth::id() // Pass the authenticated user ID
-            );
-        });
+            ->needs(BillingItemsService::class)
+            ->give(function ($app) {
+                return new BillingItemsService(
+                    new StripeItemsParser,
+                    new CartItemsProvider(new CartRepository),
+                    Auth::id() // Pass the authenticated user ID
+                );
+            });
 
-    $this->app->when(\App\Http\Controllers\PaymentController::class)
-        ->needs(PayingService::class)
-        ->give(function ($app) {
-            return new PayingService(new StripePayment());
-        });
+        $this->app->when(\App\Http\Controllers\PaymentController::class)
+            ->needs(PayingService::class)
+            ->give(function ($app) {
+                return new PayingService(new StripePayment);
+            });
     }
 
     /**

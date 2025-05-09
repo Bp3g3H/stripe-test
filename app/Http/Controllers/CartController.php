@@ -16,10 +16,10 @@ class CartController extends Controller
      */
     public function index()
     {
-           // Fetch all products with pagination
-           $cart = Cart::paginate(10);
+        // Fetch all products with pagination
+        $cart = Cart::paginate(10);
 
-           return new CartCollection($cart);
+        return new CartCollection($cart);
     }
 
     /**
@@ -27,10 +27,10 @@ class CartController extends Controller
      */
     public function store(StoreCartRequest $request)
     {
-          // Create a new product
-          $cart = Cart::createPending(Auth::id(), $request->validated());
+        // Create a new product
+        $cart = Cart::createPending(Auth::id(), $request->validated());
 
-          return new CartResource($cart);
+        return new CartResource($cart);
     }
 
     /**
@@ -49,7 +49,7 @@ class CartController extends Controller
         // Update the cart with validated data
         $cart->update($request->validated());
 
-        return  new CartResource($cart);
+        return new CartResource($cart);
     }
 
     /**

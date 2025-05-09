@@ -30,19 +30,19 @@ class CartControllerTest extends TestCase
         $response = $this->getJson(route('carts.index'));
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'data' => [
-                         '*' => [
-                             'id',
-                             'status',
-                             'total_sum',
-                             'created_at',
-                             'updated_at',
-                         ],
-                     ],
-                     'links',
-                     'meta',
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'status',
+                        'total_sum',
+                        'created_at',
+                        'updated_at',
+                    ],
+                ],
+                'links',
+                'meta',
+            ]);
     }
 
     public function test_can_create_a_new_cart()
@@ -56,7 +56,7 @@ class CartControllerTest extends TestCase
         $response = $this->postJson(route('carts.store'), $data);
 
         $response->assertStatus(201)
-                 ->assertJsonPath('data.status', 'pending');
+            ->assertJsonPath('data.status', 'pending');
 
         $this->assertDatabaseHas('carts', $data);
     }
@@ -70,8 +70,8 @@ class CartControllerTest extends TestCase
         $response = $this->getJson(route('carts.show', $cart));
 
         $response->assertStatus(200)
-                 ->assertJsonPath('data.id', $cart->id)
-                 ->assertJsonPath('data.status', $cart->status);
+            ->assertJsonPath('data.id', $cart->id)
+            ->assertJsonPath('data.status', $cart->status);
     }
 
     public function test_can_update_a_cart()
@@ -89,7 +89,7 @@ class CartControllerTest extends TestCase
         $response = $this->putJson(route('carts.update', $cart), $data);
 
         $response->assertStatus(200)
-                 ->assertJsonPath('data.status', 'completed');
+            ->assertJsonPath('data.status', 'completed');
 
         $this->assertDatabaseHas('carts', $data);
     }
@@ -113,8 +113,8 @@ class CartControllerTest extends TestCase
         $response = $this->getJson(route('carts.index'));
 
         $response->assertStatus(401)
-                 ->assertJson([
-                     'message' => 'Unauthenticated.',
-                 ]);
+            ->assertJson([
+                'message' => 'Unauthenticated.',
+            ]);
     }
 }

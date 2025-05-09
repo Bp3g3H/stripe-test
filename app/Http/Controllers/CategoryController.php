@@ -15,10 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-         // Fetch all categories
-         $categories = Category::paginate(2);
+        // Fetch all categories
+        $categories = Category::paginate(2);
 
-         return new CategoryCollection($categories);
+        return new CategoryCollection($categories);
     }
 
     /**
@@ -26,10 +26,10 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-           // Create a new category
-           $category = Category::create($request->validated());
+        // Create a new category
+        $category = Category::create($request->validated());
 
-           return new CategoryResource($category);
+        return new CategoryResource($category);
     }
 
     /**
@@ -37,20 +37,19 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-         // Return the specified category
-         return new CategoryResource($category);
+        // Return the specified category
+        return new CategoryResource($category);
     }
-
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-         // Update the category with validated data
-         $category->update($request->validated());
+        // Update the category with validated data
+        $category->update($request->validated());
 
-         return  new CategoryResource($category);
+        return new CategoryResource($category);
     }
 
     /**
@@ -58,7 +57,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-          // Delete the category
-          return $category->delete();
+        // Delete the category
+        return $category->delete();
     }
 }

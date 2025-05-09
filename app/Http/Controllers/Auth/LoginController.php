@@ -11,13 +11,12 @@ class LoginController extends Controller
     /**
      * Handle user login.
      *
-     * @param  \App\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(LoginRequest $request)
     {
         // Attempt to authenticate the user
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid credentials.',

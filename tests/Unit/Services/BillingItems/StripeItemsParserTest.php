@@ -11,7 +11,7 @@ class StripeItemsParserTest extends TestCase
     public function test_parse_billing_items()
     {
         // Arrange: Create an instance of ProductItemParser
-        $parser = new StripeItemsParser();
+        $parser = new StripeItemsParser;
 
         // Input billing items
         $billingItems = [

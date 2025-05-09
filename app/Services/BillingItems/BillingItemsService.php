@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\BillingItems;
 
@@ -8,8 +8,11 @@ use App\Services\BillingItems\Contracts\ItemProvider;
 class BillingItemsService
 {
     private ItemParser $itemParser;
+
     private ItemProvider $itemProvider;
+
     private array $billingItems;
+
     private string $identifier;
 
     public function __construct(ItemParser $itemParser, ItemProvider $itemProvider, $user_id)

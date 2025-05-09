@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Enums\CartStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
@@ -25,7 +25,7 @@ class Cart extends Model
         'completed_at',
     ];
 
-       /**
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
@@ -66,6 +66,7 @@ class Cart extends Model
             'completed_at' => null,
         ];
         $properties = array_merge($defaultProperties, $properties);
+
         return self::create($properties);
     }
 }

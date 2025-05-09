@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class CategoryControllerTest extends TestCase
 {
@@ -27,9 +27,9 @@ class CategoryControllerTest extends TestCase
         $response = $this->getJson(route('categories.index'));
 
         $response->assertStatus(401)
-                 ->assertJson([
-                     'message' => 'Unauthenticated.',
-                 ]);
+            ->assertJson([
+                'message' => 'Unauthenticated.',
+            ]);
     }
 
     public function test_can_list_all_categories()
@@ -41,18 +41,18 @@ class CategoryControllerTest extends TestCase
         $response = $this->getJson(route('categories.index'));
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'data' => [
-                         '*' => [
-                             'id',
-                             'name',
-                             'created_at',
-                             'updated_at',
-                         ],
-                     ],
-                     'links',
-                     'meta',
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'created_at',
+                        'updated_at',
+                    ],
+                ],
+                'links',
+                'meta',
+            ]);
     }
 
     public function test_can_create_a_new_category()
@@ -66,7 +66,7 @@ class CategoryControllerTest extends TestCase
         $response = $this->postJson(route('categories.store'), $data);
 
         $response->assertStatus(201)
-                 ->assertJsonPath('data.name', $data['name']);
+            ->assertJsonPath('data.name', $data['name']);
 
         $this->assertDatabaseHas('categories', $data);
     }
@@ -78,10 +78,10 @@ class CategoryControllerTest extends TestCase
         $category = Category::factory()->create();
 
         $response = $this->getJson(route('categories.show', $category));
-        
+
         $response->assertStatus(200)
-                 ->assertJsonPath('data.id', $category->id)
-                 ->assertJsonPath('data.name', $category->name);
+            ->assertJsonPath('data.id', $category->id)
+            ->assertJsonPath('data.name', $category->name);
     }
 
     public function test_can_update_a_category()
@@ -99,7 +99,7 @@ class CategoryControllerTest extends TestCase
         $response = $this->putJson(route('categories.update', $category), $data);
 
         $response->assertStatus(200)
-                 ->assertJsonPath('data.name', 'Updated Category Name');
+            ->assertJsonPath('data.name', 'Updated Category Name');
 
         $this->assertDatabaseHas('categories', $data);
     }

@@ -7,7 +7,6 @@ use App\Http\Requests\StoreCartItemRequest;
 use App\Http\Requests\UpdateCartItemRequest;
 use App\Http\Resources\CartItemCollection;
 use App\Http\Resources\CartItemResource;
-use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
@@ -29,19 +28,20 @@ class CartItemController extends Controller
      */
     public function store(StoreCartItemRequest $request)
     {
-         // Get the authenticated user
+        // Get the authenticated user
         $user = Auth::user();
 
         // Check if the user has a pending cart
         $cart = $user->carts()->where('status', CartStatus::Pending)->first();
 
         // If no pending cart exists, create one
-        if (!$cart) {
+        if (! $cart) {
             $cart = Cart::createPending($user->id);
         }
 
         // Add the cart item to the cart
         $cartItem = $cart->items()->create($request->validated());
+
         return new CartItemResource($cartItem);
     }
 
@@ -58,7 +58,7 @@ class CartItemController extends Controller
      */
     public function update(UpdateCartItemRequest $request, CartItem $cartItem)
     {
-         // Update the cart item with validated data
+        // Update the cart item with validated data
         $cartItem->update($request->validated());
 
         return new CartItemResource($cartItem);

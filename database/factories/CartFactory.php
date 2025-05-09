@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Cart;
 use App\Enums\CartStatus;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -28,7 +28,7 @@ class CartFactory extends Factory
             'completed_at' => now(),
         ]);
     }
-    
+
     public function pending()
     {
         return $this->state([

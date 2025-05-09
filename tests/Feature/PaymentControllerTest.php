@@ -3,10 +3,10 @@
 namespace Tests\Feature;
 
 use App\Enums\CartStatus;
-use App\Models\User;
-use App\Models\Product;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,7 +26,7 @@ class PaymentControllerTest extends TestCase
 
     public function test_pay_returns_checkout_url()
     {
-         // Simulate an authenticated user
+        // Simulate an authenticated user
         $this->actingAs($this->user, 'sanctum');
 
         // Create real data in the database
@@ -44,6 +44,6 @@ class PaymentControllerTest extends TestCase
 
         // Assert the response status and structure
         $response->assertStatus(200)
-                ->assertJsonStructure(['checkout_url']);
+            ->assertJsonStructure(['checkout_url']);
     }
 }

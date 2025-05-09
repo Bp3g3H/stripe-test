@@ -3,12 +3,13 @@
 namespace App\Services\Payment;
 
 use App\Services\Payment\Contracts\Payable;
-use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class StripePayment implements Payable
 {
     private array $billingItems = [];
+
     /**
      * Class constructor.
      */

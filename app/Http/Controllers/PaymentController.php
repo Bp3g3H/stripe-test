@@ -8,6 +8,7 @@ use App\Services\Payment\PayingService;
 class PaymentController extends Controller
 {
     private BillingItemsService $billingItemsService;
+
     private PayingService $payingService;
 
     public function __construct(BillingItemsService $billingItemsService, PayingService $payingService)
@@ -30,11 +31,11 @@ class PaymentController extends Controller
 
     public function success()
     {
-        return "Payment was successful!";
+        return 'Payment was successful!';
     }
 
     public function cancel()
     {
-        return "Payment was cancelled!";
+        return 'Payment was cancelled!';
     }
 }
